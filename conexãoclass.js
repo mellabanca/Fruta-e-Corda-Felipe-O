@@ -7,7 +7,7 @@ class Conexao{
             bodyB: bodyB,
             pointB:{x:0,y:0},
             length: -10,
-            sitffness:0.01
+            stiffness:0.01
         })
         World.add(world,this.link);
     }
