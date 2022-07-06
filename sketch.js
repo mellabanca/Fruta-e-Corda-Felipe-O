@@ -14,6 +14,13 @@ var chao;
 var rope;
 var fruta;
 var conexao;
+var backgroundImg, watermelon, coelho;
+
+function preload(){
+  backgroundImg = loadImage("background.png");
+  watermelon = loadImage("melon.png");
+  coelho = loadImage("Rabbit-01.png");
+}
 
 function setup() 
 {
@@ -23,6 +30,7 @@ function setup()
  
   rectMode(CENTER);
   ellipseMode(RADIUS);
+  imageMode(CENTER);
   textSize(50);
 
   chao = new Chao(200,690,600,20);
@@ -37,11 +45,13 @@ function setup()
 function draw() 
 {
   background(51);
+  image(backgroundImg, width/2, height/2, 500, 700);
+
   Engine.update(engine);
    
   chao.draw();
   rope.show();
-  ellipse(fruta.position.x, fruta.position.y, 15, 15);
+  image(watermelon,fruta.position.x, fruta.position.y, 65, 65);
 }
 
 
