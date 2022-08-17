@@ -15,15 +15,26 @@ var rope;
 var fruta;
 var conexao;
 var backgroundImg, watermelon, coelho;
+var coelhoSpr;
+var botao;
+var blink;
+var eat;
 
-function preload(){
+function preload()  {
   backgroundImg = loadImage("background.png");
   watermelon = loadImage("melon.png");
   coelho = loadImage("Rabbit-01.png");
+  blink = loadAnimation("blink_1.png","blink_2.png","blink_3.png");
+  eat = loadAnimation("eat_0.png","eat_1.png","eat_2.png","eat_3.png","eat_4.png");
+
+  blink.playing = true;
+  eat.playing = true;
+
+  blink.looping = true;
+  eat.looping = false;
 }
 
-function setup() 
-{
+function setup() {
   createCanvas(500,700);
   engine = Engine.create();
   world = engine.world;
@@ -32,6 +43,21 @@ function setup()
   ellipseMode(RADIUS);
   imageMode(CENTER);
   textSize(50);
+
+  blink.frameDelay = 15;
+  eat.frameDelay = 15;
+
+  coelhoSpr = createSprite(250, 590, 100, 100);
+  coelhoSpr.addImage(coelho);
+  coelhoSpr.scale = 0.3;
+  coelhoSpr.addAnimation("piscando", blink);
+  coelhoSpr.addAnimation("comendo", eat);
+  coelhoSpr.changeAnimation("piscando");
+
+  botao = createImg("cut_button.png");
+  botao.position(220, 30);
+  botao.size(50, 50);
+  botao.mouseClicked(Break);
 
   chao = new Chao(200,690,600,20);
   rope = new Rope(6,{x: 245, y: 30});
@@ -42,8 +68,7 @@ function setup()
   conexao = new Conexao(rope, fruta);
 }
 
-function draw() 
-{
+function draw() {
   background(51);
   image(backgroundImg, width/2, height/2, 500, 700);
 
@@ -52,8 +77,13 @@ function draw()
   chao.draw();
   rope.show();
   image(watermelon,fruta.position.x, fruta.position.y, 65, 65);
+
+  drawSprites();
 }
 
 
-
-
+function Break() {
+  conexao.break();
+  rope.break();
+  conexao = null;
+}

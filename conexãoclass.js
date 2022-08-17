@@ -11,4 +11,9 @@ class Conexao{
         })
         World.add(world,this.link);
     }
+
+    break()  { 
+        World.remove(engine.world, this.link);
+        
+      }
 }
